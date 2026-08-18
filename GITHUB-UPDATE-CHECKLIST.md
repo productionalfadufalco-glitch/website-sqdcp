@@ -1,4 +1,4 @@
-# Checklist Update GitHub Pages — Live Sync v1.1
+# Checklist Update GitHub Pages — Live Sync v1.2
 
 1. Download dan ekstrak paket versi Live Sync.
 2. Di Supabase, jalankan `SUPABASE-SETUP.sql` melalui SQL Editor.
@@ -23,7 +23,7 @@
 10. Jika HP masih memuat versi lama, hapus cache situs atau buka URL dengan parameter sementara, misalnya:
 
 ```
-https://NAMA-USER.github.io/NAMA-REPO/?v=1.1
+https://NAMA-USER.github.io/NAMA-REPO/?v=1.2
 ```
 
 Parameter tersebut tidak mengubah data; hanya membantu memaksa browser mengambil versi deployment terbaru.

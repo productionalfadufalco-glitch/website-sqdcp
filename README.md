@@ -1,15 +1,15 @@
 # S+QDCP Command Center
 ## PT. ALFA VALVES INDONESIA
 
-**Versi 1.1 — Supabase Cloud Sync + Realtime**
+**Versi 1.2 — Aturan Warna Harian + Supabase Cloud Sync/Realtime**
 
 Dashboard web statis untuk pemantauan **Safety, 5S, Quality, Delivery, Cost, dan People** selama satu bulan penuh.
 
 ## Fitur
 
 - Overview enam kartu KPI dengan kontur tanggal berbentuk **S, 5, Q, D, C, P**.
-- Status tanggal: hijau (sesuai target), kuning (perlu perhatian), merah (berisiko), abu-abu (belum ada data).
-- Sabtu, Minggu, libur nasional, dan cuti bersama diberi **lingkaran merah**.
+- Aturan warna tanggal dengan prioritas: **merah** jika ada Near Miss/Accident pada Safety; **biru** untuk Sabtu, Minggu, libur nasional, dan cuti bersama; **hijau** jika data terisi dan target tercapai; **kuning** jika data terisi tetapi target tidak tercapai; **abu-abu** jika belum ada data.
+- Jika kejadian Safety terjadi pada weekend/libur, penanda tetap **merah** agar kejadian tidak tertutupi warna hari libur.
 - Input langsung melalui tabel web untuk seluruh tanggal dalam bulan.
 - Impor/ekspor workbook Excel enam sheet: `SAFETY`, `5S`, `QUALITY`, `DELIVERY`, `COST`, `PEOPLE`.
 - Generator template Excel sesuai bulan aktif.

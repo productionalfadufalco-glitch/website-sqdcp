@@ -12,17 +12,18 @@
     id: {
       appName: 'S+QDCP Command Center', dashboard: 'Ringkasan Kinerja', dashboardSub: 'Sistem pemantauan operasional terpadu',
       navigation: 'Navigasi', overview: 'Overview', dailyData: 'Data Harian', targets: 'Target KPI', actionPlan: 'Action Plan',
-      systemStatus: 'Status sistem', localStorage: 'Penyimpanan lokal', active: 'Aktif', version: 'Versi 1.1 • Cloud Sync',
+      systemStatus: 'Status sistem', localStorage: 'Penyimpanan lokal', active: 'Aktif', version: 'Versi 1.2 • Cloud Sync',
       importExcel: 'Impor Excel', exportExcel: 'Unduh Excel', pdf: 'Unduh PDF', theme: 'Ubah tema', menu: 'Buka menu',
       monthlyOverview: 'Overview Bulanan S+QDCP', monthlyDesc: 'Pantau Safety, 5S, Quality, Delivery, Cost, dan People dalam satu tampilan.',
       liveData: 'Data tersimpan otomatis', cloudLive: 'Live • Cloud tersinkron', cloudConnecting: 'Menghubungkan cloud…', cloudSaving: 'Menyimpan ke cloud…', cloudLocal: 'Mode lokal • Cloud belum diatur', cloudError: 'Cloud terputus • Data tetap lokal', cloudUpdated: 'Data terbaru diterima', cloudSetupTitle: 'Status Cloud Sync', cloudSetupMissing: 'Isi Project URL dan Publishable/anon key pada file supabase-config.js, lalu deploy ulang ke GitHub Pages.', cloudSetupReady: 'Data dashboard tersinkron otomatis antarperangkat melalui Supabase Realtime.', syncNow: 'Sinkronkan sekarang', workingDays: 'Hari kerja', kpiMet: 'KPI sesuai target', atRisk: 'KPI berisiko', completeness: 'Kelengkapan data',
       performanceContour: 'Kontur performa harian', contourDesc: 'Klik angka tanggal untuk membuka data harian.', daily: 'Harian', weekly: 'Mingguan',
       target: 'Target', monthlyActual: 'Aktual bulan ini', met: 'Sesuai target', warning: 'Perlu perhatian', risk: 'Berisiko', noData: 'Belum ada data',
-      weekendHoliday: 'Weekend / libur', openData: 'Buka data', latestAction: 'Action plan terbaru', noAction: 'Belum ada action plan',
+      safetyIncident: 'Ada kejadian Safety', targetMetFilled: 'Data terisi • target tercapai', targetNotMetFilled: 'Data terisi • target tidak tercapai',
+      weekendHoliday: 'Weekend / libur nasional', openData: 'Buka data', latestAction: 'Action plan terbaru', noAction: 'Belum ada action plan',
       dailyTitle: 'Input Data Harian', dailyDesc: 'Isi langsung di web atau impor workbook Excel dengan format yang sama.',
       selectedMonth: 'Periode aktif', clearMonth: 'Clear bulan', downloadTemplate: 'Template Excel', savedAutomatically: 'Perubahan disimpan otomatis di browser ini.',
       date: 'Tanggal', remarks: 'Catatan / Komentar', holiday: 'Libur nasional', weekend: 'Weekend', today: 'Hari ini',
-      targetsTitle: 'Target & Kalender', targetsDesc: 'Atur ambang KPI serta hari libur tambahan untuk penandaan merah.',
+      targetsTitle: 'Target & Kalender', targetsDesc: 'Atur ambang KPI serta hari libur tambahan untuk penandaan biru.',
       primaryMetric: 'Metrik utama', targetValue: 'Nilai target', minimum: 'Minimum', maximum: 'Maksimum',
       directionMin: 'Lebih tinggi lebih baik', directionMax: 'Lebih rendah lebih baik', saved: 'Tersimpan',
       holidayCalendar: 'Kalender Libur', holidayCalendarDesc: 'Libur nasional dan cuti bersama 2026 sudah tersedia.',
@@ -59,17 +60,18 @@
     en: {
       appName: 'S+QDCP Command Center', dashboard: 'Performance Summary', dashboardSub: 'Integrated operational monitoring system',
       navigation: 'Navigation', overview: 'Overview', dailyData: 'Daily Data', targets: 'KPI Targets', actionPlan: 'Action Plan',
-      systemStatus: 'System status', localStorage: 'Local storage', active: 'Active', version: 'Version 1.1 • Cloud Sync',
+      systemStatus: 'System status', localStorage: 'Local storage', active: 'Active', version: 'Version 1.2 • Cloud Sync',
       importExcel: 'Import Excel', exportExcel: 'Download Excel', pdf: 'Download PDF', theme: 'Switch theme', menu: 'Open menu',
       monthlyOverview: 'Monthly S+QDCP Overview', monthlyDesc: 'Monitor Safety, 5S, Quality, Delivery, Cost, and People in one view.',
       liveData: 'Auto-saved data', cloudLive: 'Live • Cloud synced', cloudConnecting: 'Connecting to cloud…', cloudSaving: 'Saving to cloud…', cloudLocal: 'Local mode • Cloud not configured', cloudError: 'Cloud offline • Data remains local', cloudUpdated: 'Latest data received', cloudSetupTitle: 'Cloud Sync Status', cloudSetupMissing: 'Enter the Project URL and Publishable/anon key in supabase-config.js, then redeploy to GitHub Pages.', cloudSetupReady: 'Dashboard data syncs automatically between devices through Supabase Realtime.', syncNow: 'Sync now', workingDays: 'Working days', kpiMet: 'KPIs on target', atRisk: 'KPIs at risk', completeness: 'Data completeness',
       performanceContour: 'Daily performance contours', contourDesc: 'Click a date number to open its daily data.', daily: 'Daily', weekly: 'Weekly',
       target: 'Target', monthlyActual: 'Actual this month', met: 'On target', warning: 'Needs attention', risk: 'At risk', noData: 'No data yet',
-      weekendHoliday: 'Weekend / holiday', openData: 'Open data', latestAction: 'Latest action plan', noAction: 'No action plan yet',
+      safetyIncident: 'Safety incident recorded', targetMetFilled: 'Data filled • target achieved', targetNotMetFilled: 'Data filled • target not achieved',
+      weekendHoliday: 'Weekend / national holiday', openData: 'Open data', latestAction: 'Latest action plan', noAction: 'No action plan yet',
       dailyTitle: 'Daily Data Entry', dailyDesc: 'Enter data directly on the web or import an Excel workbook in the same format.',
       selectedMonth: 'Active period', clearMonth: 'Clear month', downloadTemplate: 'Excel Template', savedAutomatically: 'Changes are automatically saved in this browser.',
       date: 'Date', remarks: 'Remarks / Comments', holiday: 'National holiday', weekend: 'Weekend', today: 'Today',
-      targetsTitle: 'Targets & Calendar', targetsDesc: 'Set KPI thresholds and additional holidays for red-day markers.',
+      targetsTitle: 'Targets & Calendar', targetsDesc: 'Set KPI thresholds and additional holidays for blue-day markers.',
       primaryMetric: 'Primary metric', targetValue: 'Target value', minimum: 'Minimum', maximum: 'Maximum',
       directionMin: 'Higher is better', directionMax: 'Lower is better', saved: 'Saved',
       holidayCalendar: 'Holiday Calendar', holidayCalendarDesc: '2026 national holidays and collective leave are included.',
@@ -373,6 +375,19 @@
     if (value<=target) return 'met';
     return value<=target*1.2 ? 'warning':'risk';
   }
+  function hasSafetyIncident(rec) {
+    return !!rec && ((Number(rec.nearMiss)||0) > 0 || (Number(rec.accident)||0) > 0);
+  }
+  function contourStatus(cat, rec, info) {
+    // Priority: Safety incident > weekend/holiday > achieved > not achieved > empty.
+    if (cat==='safety' && hasSafetyIncident(rec)) return 'incident';
+    if (info.nonwork) return 'off';
+    if (!recordHasData(cat,rec)) return 'blank';
+    return statusFor(cat,dailyMetric(cat,rec))==='met' ? 'met' : 'warning';
+  }
+  function contourStatusLabel(status) {
+    return tr(status==='incident'?'safetyIncident':status==='off'?'weekendHoliday':status==='met'?'targetMetFilled':status==='warning'?'targetNotMetFilled':'noData');
+  }
   function aggregateMetric(cat) {
     const rows = ensureMonth()[cat], recs = Object.values(rows).filter(r=>recordHasData(cat,r));
     if (!recs.length) return null;
@@ -440,7 +455,10 @@
 
   function summaryStats() {
     const days=monthDays(state.month); let working=0,met=0,risk=0,total=0;
-    for(let d=1;d<=days;d++) if(!holidayInfo(state.month,d).nonwork){ working++; CATEGORIES.forEach(c=>{const v=dailyMetric(c,ensureMonth()[c][d]); if(v!==null){total++;const s=statusFor(c,v);if(s==='met')met++;if(s==='risk')risk++;}}); }
+    for(let d=1;d<=days;d++) {
+      const info=holidayInfo(state.month,d);if(info.nonwork)continue;working++;
+      CATEGORIES.forEach(c=>{const rec=ensureMonth()[c][d];if(!recordHasData(c,rec))return;total++;const s=contourStatus(c,rec,info);if(s==='met')met++;if(s==='warning'||s==='incident')risk++;});
+    }
     const completeness = working ? Math.round(total/(working*CATEGORIES.length)*100) : 0;
     return {working,met,risk,completeness};
   }
@@ -453,7 +471,7 @@
       </div>
       <div class="overview-toolbar"><div><h3 class="section-title">${tr('performanceContour')}</h3><div class="section-subtitle">${tr('contourDesc')}</div></div><div class="segmented no-export"><button data-action="period" data-period="daily" class="${state.overviewPeriod==='daily'?'active':''}">${tr('daily')}</button><button data-action="period" data-period="weekly" class="${state.overviewPeriod==='weekly'?'active':''}">${tr('weekly')}</button></div></div>
       <div class="kpi-grid">${CATEGORIES.map(renderKpiCard).join('')}</div>
-      <div class="legend"><strong>${tr('legend')}:</strong><span class="l-met">${tr('met')}</span><span class="l-warning">${tr('warning')}</span><span class="l-risk">${tr('risk')}</span><span class="l-empty">${tr('noData')}</span><span class="l-off">${tr('weekendHoliday')}</span></div>
+      <div class="legend"><strong>${tr('legend')}:</strong><span class="l-incident">${tr('safetyIncident')}</span><span class="l-off">${tr('weekendHoliday')}</span><span class="l-met">${tr('targetMetFilled')}</span><span class="l-warning">${tr('targetNotMetFilled')}</span><span class="l-empty">${tr('noData')}</span></div>
     </section>`;
   }
   function summaryCard(ic,value,label){return `<div class="summary-card"><div class="summary-icon">${icon(ic)}</div><div><span class="summary-value">${value}</span><span class="summary-label">${label}</span></div></div>`;}
@@ -485,9 +503,9 @@
       const cat=svg.dataset.category,path=$('.letter-guide',svg),group=$('.date-nodes',svg); if(!path||!group)return;
       const len=path.getTotalLength(),days=monthDays(state.month);
       for(let d=1;d<=days;d++){
-        const p=path.getPointAtLength(len*((d-.5)/days)), info=holidayInfo(state.month,d), value=dailyMetric(cat,ensureMonth()[cat][d]), st=statusFor(cat,value);
-        const g=document.createElementNS(NS,'g');g.setAttribute('class',`date-node ${st} ${info.nonwork?'nonwork':''}`);g.setAttribute('transform',`translate(${p.x.toFixed(1)} ${p.y.toFixed(1)})`);g.dataset.action='open-day';g.dataset.category=cat;g.dataset.day=d;g.setAttribute('tabindex','0');g.setAttribute('role','button');
-        const title=document.createElementNS(NS,'title');title.textContent=`${shortDate(state.month,d)}${info.name?' • '+info.name:''} • ${formatValue(cat,value)}`;g.appendChild(title);
+        const p=path.getPointAtLength(len*((d-.5)/days)), info=holidayInfo(state.month,d), rec=ensureMonth()[cat][d], value=dailyMetric(cat,rec), st=contourStatus(cat,rec,info);
+        const g=document.createElementNS(NS,'g');g.setAttribute('class',`date-node ${st} ${info.nonwork?'nonwork':''}`);g.setAttribute('transform',`translate(${p.x.toFixed(1)} ${p.y.toFixed(1)})`);g.dataset.action='open-day';g.dataset.category=cat;g.dataset.day=d;g.dataset.status=st;g.setAttribute('tabindex','0');g.setAttribute('role','button');
+        const title=document.createElementNS(NS,'title');title.textContent=`${shortDate(state.month,d)}${info.name?' • '+info.name:''} • ${contourStatusLabel(st)}${value===null?'':' • '+formatValue(cat,value)}`;g.appendChild(title);
         const ring=document.createElementNS(NS,'circle');ring.setAttribute('class','node-ring');ring.setAttribute('r','11');g.appendChild(ring);
         const bg=document.createElementNS(NS,'circle');bg.setAttribute('class','node-bg');bg.setAttribute('r','8.7');g.appendChild(bg);
         const txt=document.createElementNS(NS,'text');txt.textContent=d;txt.setAttribute('y','.3');g.appendChild(txt);group.appendChild(g);
@@ -504,12 +522,12 @@
       </div><p class="table-footnote">${tr('savedAutomatically')}</p></section>`;
   }
   function renderDataRow(cat,day) {
-    const rec=ensureMonth()[cat][day]||{}, info=holidayInfo(state.month,day), iso=isoDate(state.month,day), today=iso===TODAY;
-    return `<tr id="row-${day}" class="${info.nonwork?'nonwork':''} ${today?'today':''}"><td><div class="date-cell"><div><div class="date-main">${shortDate(state.month,day)}</div><div class="date-sub">${info.name|| (info.weekend?tr('weekend'):(today?tr('today'):tr('working')))}</div></div><span class="day-badge">${dayName(state.month,day)}</span></div></td>${CONFIG[cat].columns.map(c=>renderCell(cat,day,c,rec)).join('')}</tr>`;
+    const rec=ensureMonth()[cat][day]||{}, info=holidayInfo(state.month,day), iso=isoDate(state.month,day), today=iso===TODAY, marker=contourStatus(cat,rec,info);
+    return `<tr id="row-${day}" class="row-status-${marker} ${info.nonwork?'nonwork':''} ${today?'today':''}"><td><div class="date-cell"><div><div class="date-main">${shortDate(state.month,day)}</div><div class="date-sub">${info.name|| (info.weekend?tr('weekend'):(today?tr('today'):tr('working')))}</div></div><span class="day-badge">${dayName(state.month,day)}</span></div></td>${CONFIG[cat].columns.map(c=>renderCell(cat,day,c,rec)).join('')}</tr>`;
   }
   function renderCell(cat,day,col,rec) {
     if(col.type==='computed'){
-      const v=computed(cat,col.key,rec),st=col.key==='ftp'||col.key==='testingOutput'||col.key==='paintingOutput'||col.key==='totalAttendance'?statusFor(cat,v):'blank';
+      const v=computed(cat,col.key,rec),targetField=['ftp','testingOutput','paintingOutput','totalExtraHours','totalAttendance'].includes(col.key),rawStatus=targetField?statusFor(cat,v):'blank',st=rawStatus==='met'?'met':rawStatus==='blank'?'blank':'warning';
       return `<td class="computed-cell ${v===null?'':st}" data-computed-field="${col.key}">${v===null?'—':`${Math.round(v*10)/10}${col.key==='totalExtraHours'?'':'%'}`}</td>`;
     }
     if(col.type==='boolean') return `<td><input class="cell-check" type="checkbox" data-field="${col.key}" data-day="${day}" data-category="${cat}" ${rec[col.key]===true||rec[col.key]===1?'checked':''} aria-label="${esc(tr(col.label))}"></td>`;
@@ -518,9 +536,11 @@
   }
   function refreshComputedRow(cat,day) {
     const row=$(`#row-${day}`),rec=ensureMonth()[cat][day]||{};if(!row)return;
+    const info=holidayInfo(state.month,Number(day)), marker=contourStatus(cat,rec,info), today=isoDate(state.month,Number(day))===TODAY;
+    row.className=`row-status-${marker} ${info.nonwork?'nonwork':''} ${today?'today':''}`;
     CONFIG[cat].columns.filter(c=>c.type==='computed').forEach(col=>{
       const cell=$(`[data-computed-field="${col.key}"]`,row);if(!cell)return;const v=computed(cat,col.key,rec);
-      const st=col.key==='ftp'||col.key==='testingOutput'||col.key==='paintingOutput'||col.key==='totalAttendance'?statusFor(cat,v):'blank';
+      const targetField=['ftp','testingOutput','paintingOutput','totalExtraHours','totalAttendance'].includes(col.key),rawStatus=targetField?statusFor(cat,v):'blank',st=rawStatus==='met'?'met':rawStatus==='blank'?'blank':'warning';
       cell.className=`computed-cell ${v===null?'':st}`;cell.textContent=v===null?'—':`${Math.round(v*10)/10}${col.key==='totalExtraHours'?'':'%'}`;
     });
   }
@@ -644,7 +664,7 @@
   });
   $('#app').addEventListener('input',e=>{
     if(e.target.matches('[data-field]')&&e.target.type!=='checkbox'){
-      const {category,day,field}=e.target.dataset;ensureMonth()[category][day]=ensureMonth()[category][day]||{};let v=e.target.value;if(e.target.type==='number')v=v===''?null:Number(v);if(v===null||v==='')delete ensureMonth()[category][day][field];else ensureMonth()[category][day][field]=v;saveState();
+      const {category,day,field}=e.target.dataset;ensureMonth()[category][day]=ensureMonth()[category][day]||{};let v=e.target.value;if(e.target.type==='number')v=v===''?null:Number(v);if(v===null||v==='')delete ensureMonth()[category][day][field];else ensureMonth()[category][day][field]=v;saveState();refreshComputedRow(category,day);
     }
   });
   $('#app').addEventListener('submit',e=>{
