@@ -1,6 +1,8 @@
 # S+QDCP Command Center
 ## PT. ALFA VALVES INDONESIA
 
+**Versi 1.1 — Supabase Cloud Sync + Realtime**
+
 Dashboard web statis untuk pemantauan **Safety, 5S, Quality, Delivery, Cost, dan People** selama satu bulan penuh.
 
 ## Fitur
@@ -18,7 +20,8 @@ Dashboard web statis untuk pemantauan **Safety, 5S, Quality, Delivery, Cost, dan
 - Bahasa Indonesia/Inggris.
 - Unduh overview sebagai PDF A3 landscape.
 - Responsif untuk desktop, tablet, dan ponsel.
-- Penyimpanan otomatis menggunakan `localStorage` browser.
+- Penyimpanan lokal sebagai fallback saat internet terputus.
+- **Supabase Cloud Sync + Realtime** untuk live update antar-PC dan HP.
 
 ## Menjalankan
 
@@ -36,7 +39,7 @@ Lalu buka `http://localhost:4173`.
 
 ## Upload ke hosting
 
-Upload **seluruh isi folder ini**, termasuk folder `vendor`, ke folder publik hosting (misalnya `public_html`). Tidak diperlukan PHP, Node.js, database, atau proses build.
+Upload **seluruh isi folder ini**, termasuk folder `vendor`, ke folder publik hosting (misalnya `public_html`). Tidak diperlukan PHP, Node.js, atau proses build. Untuk sinkronisasi antarperangkat, buat project Supabase dan ikuti `CLOUD-SYNC-GUIDE.md`.
 
 Cocok untuk:
 
@@ -70,8 +73,16 @@ Kalender bawaan memuat libur nasional dan cuti bersama Indonesia tahun 2026 berd
 
 Sumber kalender 2026: Sekretariat Negara RI — https://setneg.go.id/baca/index/inilah_skb_3_menteri_libur_nasional_dan_cuti_bersama_2026
 
-## Catatan penyimpanan
+## Live update PC dan HP
 
-Versi ini menyimpan data di browser/perangkat yang digunakan. Data tidak otomatis dibagikan ke komputer lain. Lakukan backup rutin dengan **Unduh Excel**.
+Dashboard mendukung Supabase Realtime. Ikuti langkah lengkap pada **`CLOUD-SYNC-GUIDE.md`**:
 
-Untuk penggunaan multi-user terpusat, aplikasi dapat dikembangkan lebih lanjut dengan backend/database dan autentikasi tanpa mengubah desain dashboard.
+1. Buat project Supabase.
+2. Jalankan `SUPABASE-SETUP.sql`.
+3. Isi Project URL dan Publishable/anon key pada `supabase-config.js`.
+4. Commit ke GitHub dan tunggu GitHub Pages selesai deploy.
+5. Pastikan indikator berubah menjadi **“Live • Cloud tersinkron”**.
+
+Tanpa konfigurasi Supabase, dashboard tetap berfungsi dalam mode lokal, tetapi data PC dan HP tidak akan sama. Lakukan backup berkala menggunakan **Unduh Excel**.
+
+Konfigurasi SQL yang disertakan memakai akses publik tanpa login sesuai pilihan saat ini. Untuk data produksi yang lebih aman, gunakan Supabase Authentication dan batasi hak edit.

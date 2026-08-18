@@ -166,8 +166,16 @@ html[data-theme="dark"] .sidebar { background: #0e1b1f; border-right: 1px solid 
 .dashboard-intro { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; margin-bottom: 20px; }
 .dashboard-intro h2 { margin: 0; font-size: 24px; letter-spacing: -.035em; }
 .dashboard-intro p { margin: 6px 0 0; color: var(--muted); max-width: 650px; }
-.live-pill { background: var(--green-soft); color: var(--green); padding: 7px 11px; border-radius: 999px; font-size: 11px; font-weight: 800; white-space: nowrap; }
+.live-pill { border: 0; background: var(--green-soft); color: var(--green); padding: 7px 11px; border-radius: 999px; font-size: 11px; font-weight: 800; white-space: nowrap; cursor: pointer; }
 .live-pill::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: currentColor; margin-right: 7px; vertical-align: 1px; }
+.live-pill.cloud-local { color: var(--muted); background: var(--panel-2); border: 1px solid var(--border); }
+.live-pill.cloud-connecting, .live-pill.cloud-saving { color: var(--amber); background: var(--amber-soft); }
+.live-pill.cloud-error { color: var(--red); background: var(--red-soft); }
+.live-pill.cloud-connecting::before, .live-pill.cloud-saving::before { animation: cloud-pulse 1s ease-in-out infinite; }
+.status-dot.cloud-local { background: var(--soft); box-shadow: 0 0 0 4px rgba(146,160,167,.1); }
+.status-dot.cloud-connecting, .status-dot.cloud-saving { background: var(--amber); box-shadow: 0 0 0 4px rgba(240,165,26,.1); }
+.status-dot.cloud-error { background: var(--red); box-shadow: 0 0 0 4px rgba(228,85,85,.12); }
+@keyframes cloud-pulse { 50% { opacity:.35; transform:scale(.75); } }
 
 .summary-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 12px; margin-bottom: 18px; }
 .summary-card { background: var(--panel); border: 1px solid var(--border); border-radius: 15px; padding: 15px 16px; box-shadow: var(--shadow-sm); display: flex; align-items: center; gap: 12px; }

@@ -12,10 +12,10 @@
     id: {
       appName: 'S+QDCP Command Center', dashboard: 'Ringkasan Kinerja', dashboardSub: 'Sistem pemantauan operasional terpadu',
       navigation: 'Navigasi', overview: 'Overview', dailyData: 'Data Harian', targets: 'Target KPI', actionPlan: 'Action Plan',
-      systemStatus: 'Status sistem', localStorage: 'Penyimpanan lokal', active: 'Aktif', version: 'Versi 1.0 • Offline ready',
+      systemStatus: 'Status sistem', localStorage: 'Penyimpanan lokal', active: 'Aktif', version: 'Versi 1.1 • Cloud Sync',
       importExcel: 'Impor Excel', exportExcel: 'Unduh Excel', pdf: 'Unduh PDF', theme: 'Ubah tema', menu: 'Buka menu',
       monthlyOverview: 'Overview Bulanan S+QDCP', monthlyDesc: 'Pantau Safety, 5S, Quality, Delivery, Cost, dan People dalam satu tampilan.',
-      liveData: 'Data tersimpan otomatis', workingDays: 'Hari kerja', kpiMet: 'KPI sesuai target', atRisk: 'KPI berisiko', completeness: 'Kelengkapan data',
+      liveData: 'Data tersimpan otomatis', cloudLive: 'Live • Cloud tersinkron', cloudConnecting: 'Menghubungkan cloud…', cloudSaving: 'Menyimpan ke cloud…', cloudLocal: 'Mode lokal • Cloud belum diatur', cloudError: 'Cloud terputus • Data tetap lokal', cloudUpdated: 'Data terbaru diterima', cloudSetupTitle: 'Status Cloud Sync', cloudSetupMissing: 'Isi Project URL dan Publishable/anon key pada file supabase-config.js, lalu deploy ulang ke GitHub Pages.', cloudSetupReady: 'Data dashboard tersinkron otomatis antarperangkat melalui Supabase Realtime.', syncNow: 'Sinkronkan sekarang', workingDays: 'Hari kerja', kpiMet: 'KPI sesuai target', atRisk: 'KPI berisiko', completeness: 'Kelengkapan data',
       performanceContour: 'Kontur performa harian', contourDesc: 'Klik angka tanggal untuk membuka data harian.', daily: 'Harian', weekly: 'Mingguan',
       target: 'Target', monthlyActual: 'Aktual bulan ini', met: 'Sesuai target', warning: 'Perlu perhatian', risk: 'Berisiko', noData: 'Belum ada data',
       weekendHoliday: 'Weekend / libur', openData: 'Buka data', latestAction: 'Action plan terbaru', noAction: 'Belum ada action plan',
@@ -59,10 +59,10 @@
     en: {
       appName: 'S+QDCP Command Center', dashboard: 'Performance Summary', dashboardSub: 'Integrated operational monitoring system',
       navigation: 'Navigation', overview: 'Overview', dailyData: 'Daily Data', targets: 'KPI Targets', actionPlan: 'Action Plan',
-      systemStatus: 'System status', localStorage: 'Local storage', active: 'Active', version: 'Version 1.0 • Offline ready',
+      systemStatus: 'System status', localStorage: 'Local storage', active: 'Active', version: 'Version 1.1 • Cloud Sync',
       importExcel: 'Import Excel', exportExcel: 'Download Excel', pdf: 'Download PDF', theme: 'Switch theme', menu: 'Open menu',
       monthlyOverview: 'Monthly S+QDCP Overview', monthlyDesc: 'Monitor Safety, 5S, Quality, Delivery, Cost, and People in one view.',
-      liveData: 'Auto-saved data', workingDays: 'Working days', kpiMet: 'KPIs on target', atRisk: 'KPIs at risk', completeness: 'Data completeness',
+      liveData: 'Auto-saved data', cloudLive: 'Live • Cloud synced', cloudConnecting: 'Connecting to cloud…', cloudSaving: 'Saving to cloud…', cloudLocal: 'Local mode • Cloud not configured', cloudError: 'Cloud offline • Data remains local', cloudUpdated: 'Latest data received', cloudSetupTitle: 'Cloud Sync Status', cloudSetupMissing: 'Enter the Project URL and Publishable/anon key in supabase-config.js, then redeploy to GitHub Pages.', cloudSetupReady: 'Dashboard data syncs automatically between devices through Supabase Realtime.', syncNow: 'Sync now', workingDays: 'Working days', kpiMet: 'KPIs on target', atRisk: 'KPIs at risk', completeness: 'Data completeness',
       performanceContour: 'Daily performance contours', contourDesc: 'Click a date number to open its daily data.', daily: 'Daily', weekly: 'Weekly',
       target: 'Target', monthlyActual: 'Actual this month', met: 'On target', warning: 'Needs attention', risk: 'At risk', noData: 'No data yet',
       weekendHoliday: 'Weekend / holiday', openData: 'Open data', latestAction: 'Latest action plan', noAction: 'No action plan yet',
@@ -253,12 +253,82 @@
     } catch { return createInitialState(); }
   }
   let state = loadState();
-  const saveState = () => { try { localStorage.setItem(STORAGE_KEY,JSON.stringify(state)); } catch {} };
+  const CLOUD_CONFIG = window.SUPABASE_CONFIG || {};
+  const cloud = { client:null, channel:null, ready:false, status:'local', lastJSON:'', pendingJSON:'', saveTimer:null, applying:false, lastUpdated:null };
+  const cloudConfigured = () => !!(CLOUD_CONFIG.url && CLOUD_CONFIG.anonKey && window.supabase?.createClient);
+  const cloudPayload = () => ({ version:1, months:state.months, targets:state.targets, customHolidays:state.customHolidays, actions:state.actions });
+  const persistLocal = () => { try { localStorage.setItem(STORAGE_KEY,JSON.stringify(state)); } catch {} };
+  const saveState = () => {
+    persistLocal();
+    if (!cloud.ready || cloud.applying) return;
+    const json=JSON.stringify(cloudPayload());
+    if (json!==cloud.lastJSON && json!==cloud.pendingJSON) scheduleCloudSave(json);
+  };
   const ensureMonth = (month=state.month) => {
     if (!state.months[month]) state.months[month] = {};
     CATEGORIES.forEach(c => { if (!state.months[month][c]) state.months[month][c] = {}; });
     return state.months[month];
   };
+
+  function cloudStatusText() {
+    return tr(cloud.status==='live'?'cloudLive':cloud.status==='connecting'?'cloudConnecting':cloud.status==='saving'?'cloudSaving':cloud.status==='error'?'cloudError':'cloudLocal');
+  }
+  function cloudStatusClass() { return `cloud-${cloud.status}`; }
+  function setCloudStatus(status) {
+    cloud.status=status;
+    $$('[data-cloud-status]').forEach(el=>{el.textContent=cloudStatusText();el.className=`live-pill ${cloudStatusClass()} no-export`;});
+    $$('[data-cloud-short]').forEach(el=>el.textContent=status==='live'?'LIVE':status==='local'?'LOCAL':status==='saving'?'SYNC…':status==='connecting'?'CONNECT…':'ERROR');
+    $$('.cloud-status-dot').forEach(el=>el.className=`status-dot cloud-status-dot ${cloudStatusClass()}`);
+  }
+  function scheduleCloudSave(json) {
+    clearTimeout(cloud.saveTimer);cloud.pendingJSON=json;setCloudStatus('saving');
+    cloud.saveTimer=setTimeout(()=>pushCloud(json),650);
+  }
+  async function pushCloud(json=JSON.stringify(cloudPayload())) {
+    if(!cloud.client)return;
+    cloud.pendingJSON=json;setCloudStatus('saving');
+    try {
+      const row={id:CLOUD_CONFIG.dashboardId||'pt-alfa-valves-indonesia-main',payload:JSON.parse(json),updated_at:new Date().toISOString()};
+      const {error}=await cloud.client.from('sqdcp_dashboard').upsert(row,{onConflict:'id'});
+      if(error)throw error;
+      cloud.lastJSON=json;cloud.pendingJSON='';cloud.lastUpdated=row.updated_at;setCloudStatus('live');
+    } catch(err) {
+      console.error('Cloud save failed:',err);cloud.pendingJSON='';setCloudStatus('error');
+      setTimeout(()=>{if(cloud.ready&&cloud.status==='error')pushCloud(JSON.stringify(cloudPayload()));},10000);
+    }
+  }
+  function validCloudPayload(payload) {
+    return payload && typeof payload==='object' && payload.months && payload.targets;
+  }
+  function applyCloudPayload(payload,updatedAt=null,notify=false) {
+    if(!validCloudPayload(payload))return false;
+    const json=JSON.stringify(payload);
+    if(cloud.pendingJSON && json!==cloud.pendingJSON){setCloudStatus('saving');return false;}
+    if(json===cloud.lastJSON||json===cloud.pendingJSON){cloud.lastJSON=json;cloud.pendingJSON='';cloud.lastUpdated=updatedAt;setCloudStatus('live');return false;}
+    cloud.applying=true;
+    state.months=payload.months||{};state.targets={...state.targets,...(payload.targets||{})};state.customHolidays=payload.customHolidays||{};state.actions=payload.actions||[];
+    ensureMonth();cloud.lastJSON=json;cloud.pendingJSON='';cloud.lastUpdated=updatedAt;persistLocal();cloud.applying=false;renderShell();setCloudStatus('live');
+    if(notify)showToast(tr('cloudUpdated'));
+    return true;
+  }
+  async function initCloudSync() {
+    if(!cloudConfigured()){setCloudStatus('local');return;}
+    setCloudStatus('connecting');
+    try {
+      cloud.client=window.supabase.createClient(CLOUD_CONFIG.url,CLOUD_CONFIG.anonKey,{auth:{persistSession:false,autoRefreshToken:false}});
+      const id=CLOUD_CONFIG.dashboardId||'pt-alfa-valves-indonesia-main';
+      const {data,error}=await cloud.client.from('sqdcp_dashboard').select('payload,updated_at').eq('id',id).maybeSingle();
+      if(error)throw error;
+      cloud.ready=true;
+      if(data&&validCloudPayload(data.payload)) applyCloudPayload(data.payload,data.updated_at,false);
+      else { cloud.lastJSON=data?JSON.stringify(data.payload||{}):''; await pushCloud(JSON.stringify(cloudPayload())); }
+      cloud.channel=cloud.client.channel(`sqdcp-live-${id}`)
+        .on('postgres_changes',{event:'*',schema:'public',table:'sqdcp_dashboard',filter:`id=eq.${id}`},event=>{
+          if(event.new?.payload)applyCloudPayload(event.new.payload,event.new.updated_at,true);
+        })
+        .subscribe(status=>{if(status==='SUBSCRIBED')setCloudStatus('live');if(status==='CHANNEL_ERROR'||status==='TIMED_OUT')setCloudStatus('error');});
+    } catch(err) { console.error('Cloud connection failed:',err);cloud.ready=false;setCloudStatus('error'); }
+  }
 
   function holidayInfo(month, day) {
     const iso = isoDate(month,day), d = dateObj(month,day), weekend = d.getDay()===0 || d.getDay()===6;
@@ -340,7 +410,7 @@
         <div class="brand"><div class="brand-mark">AV</div><div class="brand-name">PT. ALFA VALVES<br>INDONESIA<small>S+QDCP Command Center</small></div></div>
         <div class="nav-label">${tr('navigation')}</div>
         <ul class="nav-list">${nav.map(n=>`<li><button class="nav-btn ${state.activeView===n[0]?'active':''}" data-action="navigate" data-view="${n[0]}">${icon(n[1])}<span class="nav-text">${tr(n[2])}</span></button></li>`).join('')}</ul>
-        <div class="sidebar-status"><div class="sidebar-status-title">${tr('systemStatus')}</div><div class="status-mini"><span><i class="status-dot"></i>${tr('localStorage')}</span><strong>${tr('active')}</strong></div><div class="status-mini"><span>${monthLabel(state.month)}</span><strong>${filledDays()} ${tr('record')}</strong></div></div>
+        <div class="sidebar-status"><div class="sidebar-status-title">${tr('systemStatus')}</div><div class="status-mini"><span><i class="status-dot cloud-status-dot ${cloudStatusClass()}"></i>Cloud Sync</span><strong data-cloud-short>${cloud.status==='live'?'LIVE':cloud.status==='local'?'LOCAL':cloud.status.toUpperCase()}</strong></div><div class="status-mini"><span>${monthLabel(state.month)}</span><strong>${filledDays()} ${tr('record')}</strong></div></div>
         <div class="sidebar-footer">${tr('version')}<br>© 2026 PT. ALFA VALVES INDONESIA</div>
       </aside>
       <main class="main-shell">
@@ -377,7 +447,7 @@
   function renderOverview() {
     const stats=summaryStats();
     return `<section id="overviewCapture">
-      <div class="dashboard-intro"><div><div class="kpi-eyebrow" style="color:var(--teal)">PT. ALFA VALVES INDONESIA</div><h2>${tr('monthlyOverview')}</h2><p>${tr('monthlyDesc')} <strong>${monthLabel(state.month)}</strong></p></div><span class="live-pill">${tr('liveData')}</span></div>
+      <div class="dashboard-intro"><div><div class="kpi-eyebrow" style="color:var(--teal)">PT. ALFA VALVES INDONESIA</div><h2>${tr('monthlyOverview')}</h2><p>${tr('monthlyDesc')} <strong>${monthLabel(state.month)}</strong></p></div><button class="live-pill ${cloudStatusClass()} no-export" data-action="cloud-info" data-cloud-status>${cloudStatusText()}</button></div>
       <div class="summary-grid">
         ${summaryCard('calendar',stats.working,tr('workingDays'))}${summaryCard('check',stats.met,tr('kpiMet'))}${summaryCard('alert',stats.risk,tr('atRisk'))}${summaryCard('database',`${stats.completeness}%`,tr('completeness'))}
       </div>
@@ -553,6 +623,7 @@
     else if(a==='export-excel')downloadWorkbook(false);
     else if(a==='template')downloadWorkbook(true);
     else if(a==='pdf')exportPDF();
+    else if(a==='cloud-info')confirmDialog(tr('cloudSetupTitle'),cloudConfigured()?tr('cloudSetupReady'):tr('cloudSetupMissing'),cloudConfigured()?tr('syncNow'):'OK',()=>{if(cloudConfigured()){if(cloud.ready)pushCloud(JSON.stringify(cloudPayload()));else initCloudSync();}});
     else if(a==='period'){state.overviewPeriod=btn.dataset.period;saveState();renderShell();}
     else if(a==='category'){state.activeCategory=btn.dataset.category;saveState();renderShell();}
     else if(a==='open-day'){state.activeCategory=btn.dataset.category;state.activeView='daily';saveState();renderShell();setTimeout(()=>$('#row-'+btn.dataset.day)?.scrollIntoView({block:'center'}),60);}
@@ -581,5 +652,5 @@
   });
   $('#app').addEventListener('keydown',e=>{const n=e.target.closest('.date-node');if(n&&(e.key==='Enter'||e.key===' ')){e.preventDefault();n.dispatchEvent(new MouseEvent('click',{bubbles:true}));}});
 
-  ensureMonth();renderShell();
+  ensureMonth();renderShell();initCloudSync();
 })();
