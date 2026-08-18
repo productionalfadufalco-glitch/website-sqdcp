@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Dashboard S+QDCP PT. ALFA VALVES INDONESIA" />
+  <title>S+QDCP Command Center — PT. ALFA VALVES INDONESIA</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app"></div>
+  <input id="excelFile" type="file" accept=".xlsx,.xls,.csv" hidden />
+  <div id="toastRegion" class="toast-region" aria-live="polite"></div>
+  <dialog id="confirmDialog" class="modal"></dialog>
+  <dialog id="actionDialog" class="modal"></dialog>
+
+  <script src="vendor/xlsx.full.min.js"></script>
+  <script src="vendor/html2canvas.min.js"></script>
+  <script src="vendor/jspdf.umd.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
